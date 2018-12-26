@@ -14,7 +14,7 @@
 #include "flowgraph.h"
 
 struct RA_result RA_regAlloc(F_frame f, AS_instrList il) {
-	//your code here
-	struct RA_result ret;
-	return ret;
+   //your code here
+   struct RA_result ret;
+   return ret;
 }

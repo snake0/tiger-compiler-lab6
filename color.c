@@ -13,8 +13,14 @@
 #include "color.h"
 #include "table.h"
 
-struct COL_result COL_color(G_graph ig, Temp_map initial, Temp_tempList regs) {
-	//your code here.
-	struct COL_result ret;
-	return ret;
+static bool isPrecolored(G_node n);
+
+bool isPrecolored(G_node ig_n) {
+   Temp_temp t = Live_gtemp(ig_n);
+   return Temp_inTempList(F_registers(), t);
+}
+
+struct COL_result COL_color(G_graph ig, Temp_map initial, Temp_tempList regs, Live_moveList moves) {
+   struct COL_result ret;
+   return ret;
 }

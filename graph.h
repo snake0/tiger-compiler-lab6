@@ -9,10 +9,13 @@ typedef struct G_graph_ *G_graph;  /* The "graph" type */
 typedef struct G_node_ *G_node;    /* The "node" type */
 
 typedef struct G_nodeList_ *G_nodeList;
-struct G_nodeList_ { G_node head; G_nodeList tail;};
+struct G_nodeList_ {
+   G_node head;
+   G_nodeList tail;
+};
 
 /* Make a new graph */
-G_graph G_Graph(void); 
+G_graph G_Graph(void);
 /* Make a new node in graph "g", with associated "info" */
 G_node G_Node(G_graph g, void *info);
 
@@ -55,7 +58,7 @@ G_nodeList G_adj(G_node n);
 void *G_nodeInfo(G_node n);
 
 /* The type of "tables" mapping graph-nodes to information */
-typedef struct TAB_table_  *G_table;
+typedef struct TAB_table_ *G_table;
 
 /* Make a new table */
 G_table G_empty(void);
@@ -66,4 +69,7 @@ void G_enter(G_table t, G_node node, void *value);
 /* Tell what "node" maps to in table "t" */
 void *G_look(G_table t, G_node node);
 
+bool G_isAdj(G_node n1, G_node n2);
+/* Get the reversed list of nodes belonging to "g" */
+G_nodeList G_rnodes(G_graph g);
 #endif

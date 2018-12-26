@@ -55,3 +55,4 @@ dkms.conf
 
 cmake-build-debug/CMakeFiles/3.13.2/CompilerIdC/tmp/
 cmake-build-debug/CMakeFiles/CMakeTmp/
+.DS_Store

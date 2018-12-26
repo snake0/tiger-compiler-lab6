@@ -11,7 +11,10 @@ Temp_temp Temp_newtemp(void);
 int Temp_int(Temp_temp);
 
 typedef struct Temp_tempList_ *Temp_tempList;
-struct Temp_tempList_ { Temp_temp head; Temp_tempList tail;};
+struct Temp_tempList_ {
+   Temp_temp head;
+   Temp_tempList tail;
+};
 Temp_tempList Temp_TempList(Temp_temp h, Temp_tempList t);
 
 typedef S_symbol Temp_label;
@@ -20,7 +23,10 @@ Temp_label Temp_namedlabel(string name);
 string Temp_labelstring(Temp_label s);
 
 typedef struct Temp_labelList_ *Temp_labelList;
-struct Temp_labelList_ { Temp_label head; Temp_labelList tail;};
+struct Temp_labelList_ {
+   Temp_label head;
+   Temp_labelList tail;
+};
 Temp_labelList Temp_LabelList(Temp_label h, Temp_labelList t);
 
 typedef struct Temp_map_ *Temp_map;
@@ -30,6 +36,12 @@ void Temp_enter(Temp_map m, Temp_temp t, string s);
 string Temp_look(Temp_map m, Temp_temp t);
 void Temp_dumpMap(FILE *out, Temp_map m);
 
-Temp_map Temp_name(void);
+Temp_map Temp_nameMap(void);
 
+bool Temp_insertList(Temp_tempList *lp, Temp_temp t);
+bool Temp_inTempList(Temp_tempList l, Temp_temp t);
+string Temp_name(Temp_temp t);
+
+Temp_tempList L(unsigned argsNum, ...);
+unsigned int Lsize(Temp_tempList l);
 #endif

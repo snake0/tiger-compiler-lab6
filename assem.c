@@ -44,6 +44,14 @@ AS_instr AS_Move(string a, Temp_tempList d, Temp_tempList s) {
    return p;
 }
 
+AS_instr AS_Jmp(string a, AS_targets j) {
+   AS_instr p = (AS_instr) checked_malloc(sizeof *p);
+   p->u.OPER.assem = a;
+   p->u.OPER.jumps = j;
+   p->u.OPER.cond = FALSE;
+   return p;
+}
+
 AS_instrList AS_InstrList(AS_instr head, AS_instrList tail) {
    AS_instrList p = (AS_instrList) checked_malloc(sizeof *p);
    p->head = head;
