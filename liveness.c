@@ -11,7 +11,6 @@
 #include "liveness.h"
 #include "table.h"
 
-
 static G_graph ig;
 static Live_moveList moves;
 static G_table priorities;

@@ -11,55 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tiger.lex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tiger.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/absyn.c" beforeDir="false" afterPath="$PROJECT_DIR$/absyn.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assem.c" beforeDir="false" afterPath="$PROJECT_DIR$/assem.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assem.h" beforeDir="false" afterPath="$PROJECT_DIR$/assem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/canon.c" beforeDir="false" afterPath="$PROJECT_DIR$/canon.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/canon.h" beforeDir="false" afterPath="$PROJECT_DIR$/canon.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codegen.c" beforeDir="false" afterPath="$PROJECT_DIR$/codegen.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/color.c" beforeDir="false" afterPath="$PROJECT_DIR$/color.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/color.h" beforeDir="false" afterPath="$PROJECT_DIR$/color.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.c" beforeDir="false" afterPath="$PROJECT_DIR$/env.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.h" beforeDir="false" afterPath="$PROJECT_DIR$/env.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errormsg.c" beforeDir="false" afterPath="$PROJECT_DIR$/errormsg.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errormsg.h" beforeDir="false" afterPath="$PROJECT_DIR$/errormsg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/escape.c" beforeDir="false" afterPath="$PROJECT_DIR$/escape.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flowgraph.c" beforeDir="false" afterPath="$PROJECT_DIR$/flowgraph.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph.c" beforeDir="false" afterPath="$PROJECT_DIR$/graph.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/graph.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.h" beforeDir="false" afterPath="$PROJECT_DIR$/helper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liveness.c" beforeDir="false" afterPath="$PROJECT_DIR$/liveness.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liveness.h" beforeDir="false" afterPath="$PROJECT_DIR$/liveness.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/parse.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prabsyn.c" beforeDir="false" afterPath="$PROJECT_DIR$/prabsyn.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/printtree.c" beforeDir="false" afterPath="$PROJECT_DIR$/printtree.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/printtree.h" beforeDir="false" afterPath="$PROJECT_DIR$/printtree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/regalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/regalloc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/regalloc.h" beforeDir="false" afterPath="$PROJECT_DIR$/regalloc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime.c" beforeDir="false" afterPath="$PROJECT_DIR$/runtime.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/semant.c" beforeDir="false" afterPath="$PROJECT_DIR$/semant.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symbol.c" beforeDir="false" afterPath="$PROJECT_DIR$/symbol.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table.c" beforeDir="false" afterPath="$PROJECT_DIR$/table.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.c" beforeDir="false" afterPath="$PROJECT_DIR$/temp.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.h" beforeDir="false" afterPath="$PROJECT_DIR$/temp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translate.c" beforeDir="false" afterPath="$PROJECT_DIR$/translate.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translate.h" beforeDir="false" afterPath="$PROJECT_DIR$/translate.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.c" beforeDir="false" afterPath="$PROJECT_DIR$/tree.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types.c" beforeDir="false" afterPath="$PROJECT_DIR$/types.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types.h" beforeDir="false" afterPath="$PROJECT_DIR$/types.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util.c" beforeDir="false" afterPath="$PROJECT_DIR$/util.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util.h" beforeDir="false" afterPath="$PROJECT_DIR$/util.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/x86frame.c" beforeDir="false" afterPath="$PROJECT_DIR$/x86frame.c" afterDir="false" />
-    </list>
+    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/flowgraph.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
             </state>
           </provider>
         </entry>
@@ -124,7 +76,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assem.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="447">
@@ -133,20 +85,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frame.h">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/printtree.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+            <state relative-caret-position="-1785">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+              <folding>
+                <element signature="e#90#108#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tiger.y">
+        <entry file="file://$PROJECT_DIR$/frame.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="170" column="1" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
+            <state relative-caret-position="342">
+              <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -198,7 +153,6 @@
         <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/parse.c" />
         <option value="$PROJECT_DIR$/prabsyn.c" />
-        <option value="$PROJECT_DIR$/printtree.c" />
         <option value="$PROJECT_DIR$/printtree.h" />
         <option value="$PROJECT_DIR$/regalloc.c" />
         <option value="$PROJECT_DIR$/regalloc.h" />
@@ -221,11 +175,13 @@
         <option value="$PROJECT_DIR$/temp.c" />
         <option value="$PROJECT_DIR$/assem.c" />
         <option value="$PROJECT_DIR$/assem.h" />
+        <option value="$PROJECT_DIR$/printtree.c" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="width" value="969" />
+    <option name="x" value="789" />
+    <option name="width" value="651" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -288,18 +244,18 @@
       <workItem from="1545808035015" duration="179000" />
       <workItem from="1545808237046" duration="107000" />
       <workItem from="1545808360606" duration="884000" />
-      <workItem from="1545809265579" duration="498000" />
+      <workItem from="1545809265579" duration="719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2736000" />
+    <option name="totallyTimeSpent" value="2957000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="969" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22006473" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14592275" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" weight="0.32885906" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -495,13 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/printtree.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="26" column="31" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/printtree.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -689,7 +638,7 @@
     <entry file="file://$PROJECT_DIR$/frame.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="50" column="25" lean-forward="true" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+          <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -713,7 +662,7 @@
     <entry file="file://$PROJECT_DIR$/flowgraph.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
     </entry>
@@ -728,6 +677,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
           <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/printtree.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1785">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#90#108#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
