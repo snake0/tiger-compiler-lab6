@@ -13,51 +13,51 @@
 
 T Live_gtemp(G_node ig_n) { return G_nodeInfo(ig_n); }
 
-static void enterLiveMap(G_table t, G_node flowNode, Set temps) { G_enter(t, flowNode, temps); }
+static void enterLiveMap(G_table t, G_node flowNode, TSet temps) { G_enter(t, flowNode, temps); }
 
-static Set lookupLiveMap(G_table t, G_node flownode) { return (Set) G_look(t, flownode); }
+static TSet lookupLiveMap(G_table t, G_node flownode) { return (TSet) G_look(t, flownode); }
 
 /* ==================== tool functions ==================== */
-bool Set_in(Set s, T t) {
+bool TSet_in(TSet s, T t) {
    forEachTemp(i, s) {
       if (i->head == t)return TRUE;
    }
    return FALSE;
 }
 
-unsigned Set_size(Set s) {
+unsigned TSet_size(TSet s) {
    unsigned size = 0;
    forEachTemp(i, s) { ++size; }
    return size;
 }
 
-Set Set_diff(Set s1, Set s2) {
-   Set ret = NULL;
+TSet TSet_diff(TSet s1, TSet s2) {
+   TSet ret = NULL;
    forEachTemp(i, s1) {
-      if (!Set_in(s2, i->head))
+      if (!TSet_in(s2, i->head))
          ret = Temp_TempList(i->head, ret);
    }
    return ret;
 }
 
-Set Set_union(Set s1, Set s2) {
-   Set ret = NULL;
+TSet TSet_union(TSet s1, TSet s2) {
+   TSet ret = NULL;
    forEachTemp(i, s1) {
       ret = Temp_TempList(i->head, ret);
    }
    forEachTemp(i, s2) {
-      if (!Set_in(s1, i->head))
+      if (!TSet_in(s1, i->head))
          ret = Temp_TempList(i->head, ret);
    }
    return ret;
 }
 
-bool Set_equal(Set s1, Set s2) {
+bool TSet_equal(TSet s1, TSet s2) {
    forEachTemp(i, s1) {
-      if (!Set_in(s2, i->head))
+      if (!TSet_in(s2, i->head))
          return FALSE;
    }
-   if (Set_size(s1) != Set_size(s2))
+   if (TSet_size(s1) != TSet_size(s2))
       return FALSE;
    return TRUE;
 }
@@ -108,10 +108,10 @@ static void initContext(G_graph flow);
 
 /* static variables */
 static MSet moves;
-static G_nodeList precolored;
+static GSet precolored;
 static G_table degree;
 static TAB_table t2n;
-static G_nodeList flowNodes;
+static GSet flowNodes;
 
 struct Live_graph Live_liveness(G_graph flow) {
    initContext(flow);
@@ -146,9 +146,9 @@ void Ig_Edge(G_graph graph, T t1, T t2) {
    ++*((int *) G_look(degree, u));
    ++*((int *) G_look(degree, v));
    G_addAdj(u, v);
-   if (!Set_in(F_registers(), t1))
+   if (!TSet_in(F_registers(), t1))
       G_addEdge(u, v);
-   if (!Set_in(F_registers(), t2))
+   if (!TSet_in(F_registers(), t2))
       G_addEdge(v, u);
 }
 
@@ -160,20 +160,20 @@ static G_table buildLiveOut() {
       dirty = FALSE;
       forEachNode(nodes, flowNodes) {
          G_node node = nodes->head;
-         Set in = lookupLiveMap(tab_in, node);
-         Set out = lookupLiveMap(tab_out, node);
+         TSet in = lookupLiveMap(tab_in, node);
+         TSet out = lookupLiveMap(tab_out, node);
 
          /* in = use U (out-def) out = U(succ) in */
-         Set inp = Set_union(FG_use(node), Set_diff(out, FG_def(node)));
-         Set outp = NULL;
+         TSet inp = TSet_union(FG_use(node), TSet_diff(out, FG_def(node)));
+         TSet outp = NULL;
          forEachNode(succ, G_succ(node)) {
-            outp = Set_union(outp, lookupLiveMap(tab_in, succ->head));
+            outp = TSet_union(outp, lookupLiveMap(tab_in, succ->head));
          }
-         if (!Set_equal(in, inp)) {
+         if (!TSet_equal(in, inp)) {
             dirty = TRUE;
             enterLiveMap(tab_in, node, inp);
          }
-         if (!Set_equal(out, outp)) {
+         if (!TSet_equal(out, outp)) {
             dirty = TRUE;
             enterLiveMap(tab_out, node, outp);
          }
@@ -183,7 +183,7 @@ static G_table buildLiveOut() {
 }
 
 G_graph buildIg(G_table liveOut) {
-   Set regs = F_registers();
+   TSet regs = F_registers();
    G_graph ig = G_Graph();
    /* precolored nodes */
    forEachTemp(s1, regs) {
@@ -201,9 +201,9 @@ G_graph buildIg(G_table liveOut) {
    /* add edges */
    forEachNode(nodes, flowNodes) {
       G_node node = nodes->head;
-      Set out = lookupLiveMap(liveOut, node);
+      TSet out = lookupLiveMap(liveOut, node);
       if (FG_isMove(node)) {
-         out = Set_diff(out, FG_use(node));
+         out = TSet_diff(out, FG_use(node));
          forEachTemp(def, FG_def(node)) {
             forEachTemp(use, FG_use(node)) {
                if (use->head != F_FP() && def->head != F_FP()) {

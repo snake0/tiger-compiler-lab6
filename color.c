@@ -17,7 +17,7 @@ static bool isPrecolored(G_node n);
 
 bool isPrecolored(G_node ig_n) {
    Temp_temp t = Live_gtemp(ig_n);
-   return Set_in(F_registers(), t);
+   return TSet_in(F_registers(), t);
 }
 
 struct COL_result COL_color(G_graph ig, Temp_map initial, Temp_tempList regs, Live_moveList moves) {
