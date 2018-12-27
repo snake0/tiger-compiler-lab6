@@ -88,7 +88,7 @@ DEF_REG(F_R14, reg[14])
 
 DEF_REG(F_R15, reg[15])
 
-Temp_map F_nameMap(void) {
+Temp_map F_tempMap(void) {
    if (!temp_map) {
       temp_map = Temp_empty();
       for (int i = 0; i < F_REGNUM; ++i) {

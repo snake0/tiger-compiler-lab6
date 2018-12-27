@@ -25,6 +25,7 @@ struct G_node_ {
    int mykey;
    G_nodeList succs;
    G_nodeList preds;
+   G_nodeList adjs; // for undirected graph
    void *info;
 };
 
@@ -57,6 +58,7 @@ G_node G_Node(G_graph g, void *info) {
 
    n->succs = NULL;
    n->preds = NULL;
+   n->adjs = NULL;
    n->info = info;
    return n;
 }
@@ -181,5 +183,12 @@ G_nodeList G_rnodes(G_graph g) {
 bool G_isAdj(G_node n1, G_node n2) {
    assert(n1 && n2);
    assert(n1->mygraph == n2->mygraph);
-   return G_inNodeList(n2, G_succ(n1)) || G_inNodeList(n2, G_pred(n1));
+   return G_inNodeList(n2, n1->adjs);
+}
+
+void G_addAdj(G_node u, G_node v) {
+   assert(u && v);
+   if (G_isAdj(u, v))return;
+   u->adjs = G_NodeList(v, u->adjs);
+   v->adjs = G_NodeList(u, v->adjs);
 }

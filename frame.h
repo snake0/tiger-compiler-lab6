@@ -48,7 +48,7 @@ Temp_temp F_R13(void);
 Temp_temp F_R14(void);
 Temp_temp F_R15(void);
 
-Temp_map F_nameMap(void);
+Temp_map F_tempMap(void);
 Temp_tempList F_registers(void);
 Temp_tempList F_callersaves(void);
 Temp_tempList F_calleesaves(void);

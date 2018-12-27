@@ -11,89 +11,215 @@
 #include "liveness.h"
 #include "table.h"
 
-/* static variables */
-static G_graph ig;
-static Live_moveList moves;
-static G_table priorities;
-static G_table in_table, out_table;
-static G_nodeList precolored;
+/* default functions */
+T Live_gtemp(G_node ig_n) { return G_nodeInfo(ig_n); }
 
-/* static functions */
-static void enterLiveMap(G_table t, G_node fg_n, Temp_tempList temps);
-static Temp_tempList lookupLiveMap(G_table t, G_node fg_n);
-static void initContext(void);
+static void enterLiveMap(G_table t, G_node flowNode, Set temps) { G_enter(t, flowNode, temps); }
 
-struct Live_graph Live_liveness(G_graph fg) {
-   struct Live_graph lg;
-   G_nodeList fg_rns = G_rnodes(fg);
-   initContext();
+static Set lookupLiveMap(G_table t, G_node flownode) { return (Set) G_look(t, flownode); }
 
-   bool dirty;
-   do {
-      dirty = FALSE;
-      for (G_nodeList fg_ns = fg_rns; fg_ns; fg_ns = fg_ns->tail) {
-         G_node fg_n = fg_ns->head;
-         Temp_tempList
-                 in_set = lookupLiveMap(in_table, fg_n),
-                 out_set = lookupLiveMap(out_table, fg_n),
-                 use_set = FG_use(fg_n),
-                 def_set = FG_def(fg_n);
-
-         for (; use_set; use_set = use_set->tail)
-            dirty = Temp_insertList(&in_set, use_set->head);
-         for (; out_set; out_set = out_set->tail)
-            if (!Temp_inTempList(def_set, out_set->head))
-               dirty = Temp_insertList(&in_set, out_set->head);
-
-         out_set = lookupLiveMap(out_table, fg_n);
-         G_nodeList succ_ns = G_succ(fg_n);
-         for (; succ_ns; succ_ns = succ_ns->tail) {
-            Temp_tempList succ_in_set = lookupLiveMap(in_table, succ_ns->head);
-            for (; succ_in_set; succ_in_set = succ_in_set->tail) {
-               dirty = Temp_insertList(&out_set, succ_in_set->head);
-            }
-         }
-         if (dirty) {
-            enterLiveMap(in_table, fg_n, in_set);
-            enterLiveMap(out_table, fg_n, out_set);
-         }
-      }
-   } while (dirty);
-   lg.ig = ig;
-   lg.moves = moves;
-   lg.priorities = priorities;
-   lg.precolored = precolored;
-   return lg;
+/* set operators */
+bool Set_in(Set s, T t) {
+   for_each(i, s) {
+      if (i->head == t)return TRUE;
+   }
+   return FALSE;
 }
 
-static void enterLiveMap(G_table t, G_node fg_n, Temp_tempList temps) {
-   G_enter(t, fg_n, temps);
+unsigned Set_size(Set s) {
+   unsigned size = 0;
+   for_each(i, s) { ++size; }
+   return size;
 }
 
-static Temp_tempList lookupLiveMap(G_table t, G_node fg_n) {
-   return G_look(t, fg_n);
+Set Set_diff(Set s1, Set s2) {
+   Set ret = NULL;
+   for_each(i, s1) {
+      if (!Set_in(s2, i->head))
+         ret = Temp_TempList(i->head, ret);
+   }
+   return ret;
 }
 
+Set Set_union(Set s1, Set s2) {
+   Set ret = NULL;
+   for_each(i, s1) {
+      ret = Temp_TempList(i->head, ret);
+   }
+   for_each(i, s2) {
+      if (!Set_in(s1, i->head))
+         ret = Temp_TempList(i->head, ret);
+   }
+   return ret;
+}
 
-Live_moveList Live_MoveList(G_node src, G_node dst, Live_moveList tail) {
-   Live_moveList lm = (Live_moveList) checked_malloc(sizeof(*lm));
+bool Set_equal(Set s1, Set s2) {
+   for_each(i, s1) {
+      if (!Set_in(s2, i->head))
+         return FALSE;
+   }
+   for_each(i, s2) {
+      if (!Set_in(s1, i->head))
+         return FALSE;
+   }
+   return TRUE;
+}
+
+/* move set operators */
+MSet MSet_union(MSet m1, MSet m2) {
+   MSet ret = NULL;
+   for (MSet m = m1; m; m = m->tail)
+      ret = Live_MoveList(m->src, m->dst, ret);
+   for (MSet m = m2; m; m = m->tail)
+      if (!MSet_in(m1, m->src, m->dst))
+         ret = Live_MoveList(m->src, m->dst, ret);
+   return ret;
+}
+
+MSet MSet_diff(MSet m1, MSet m2) {
+   MSet ret = NULL;
+   for (MSet a = m1; a; a = a->tail)
+      if (!MSet_in(m2, a->src, a->dst))
+         ret = Live_MoveList(a->src, a->dst, ret);
+   return ret;
+}
+
+bool MSet_in(MSet m, G_node src, G_node dst) {
+   for (; m; m = m->tail)
+      if (m->src == src && m->dst == dst)
+         return TRUE;
+   return FALSE;
+}
+
+MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
+   MSet lm = (MSet) checked_malloc(sizeof(*lm));
    lm->src = src;
    lm->dst = dst;
    lm->tail = tail;
    return lm;
 }
 
-Temp_temp Live_gtemp(G_node ig_n) {
-   return G_nodeInfo(ig_n);
+/* static functions */
+static G_node Ig_Node(G_graph graph, T t);
+static void Ig_Edge(G_graph graph, T t1, T t2);
+static G_table buildLiveOut();
+static G_graph buildIg(G_table liveOut);
+static void initContext(G_graph flow);
+
+/* static variables */
+static MSet moves;
+static G_nodeList precolored;
+static G_table degree;
+static TAB_table t2n;
+static G_graph flowGraph;
+
+struct Live_graph Live_liveness(G_graph flow) {
+   initContext(flow);
+   /* build liveOut table */
+   G_table tab_out = buildLiveOut();
+   /* build interference graph */
+   G_graph graph = buildIg(tab_out);
+   struct Live_graph result = {graph, moves, degree, precolored};
+   return result;
 }
 
-void initContext(void) {
-   static bool inited = FALSE;
-   if (inited) return;
-   ig = G_Graph();
+static void initContext(G_graph flow) {
    moves = NULL;
-   out_table = in_table = priorities = G_empty();
    precolored = NULL;
-   inited = TRUE;
+   degree = G_empty();
+   t2n = TAB_empty();
+   flowGraph = flow;
+}
+
+G_node Ig_Node(G_graph graph, T t) {
+   G_node node = TAB_look(t2n, t);
+   if (node) return node;
+   node = G_Node(graph, t);
+   TAB_enter(t2n, t, node);
+   int *count = checked_malloc(sizeof(int));
+   *count = 0;
+   G_enter(degree, node, count);
+   return node;
+}
+
+void Ig_Edge(G_graph graph, T t1, T t2) {
+   if (t1 == t2 || t1 == F_FP() || t2 == F_FP()) return;
+   G_node u = Ig_Node(graph, t1), v = Ig_Node(graph, t2);
+   ++*((int *) G_look(degree, u));
+   ++*((int *) G_look(degree, v));
+   G_addAdj(u, v);
+   if (!Set_in(F_registers(), t1))
+      G_addEdge(u, v);
+   if (!Set_in(F_registers(), t2))
+      G_addEdge(v, u);
+}
+
+
+static G_table buildLiveOut() {
+   G_table tab_in = G_empty(), tab_out = G_empty();
+   G_nodeList flowNodes = G_nodes(flowGraph);
+   bool dirty;
+   do {
+      dirty = FALSE;
+      for (G_nodeList nodes = flowNodes; nodes; nodes = nodes->tail) {
+         G_node node = nodes->head;
+         Set in = lookupLiveMap(tab_in, node);
+         Set out = lookupLiveMap(tab_out, node);
+         Set inp = Set_union(FG_use(node), Set_diff(out, FG_def(node)));
+         Set outp = NULL;
+         for (G_nodeList succ = G_succ(node); succ; succ = succ->tail)
+            outp = Set_union(outp, lookupLiveMap(tab_in, succ->head));
+         if (!Set_equal(in, inp)) {
+            dirty = TRUE;
+            enterLiveMap(tab_in, node, inp);
+         }
+         if (!Set_equal(out, outp)) {
+            dirty = TRUE;
+            enterLiveMap(tab_out, node, outp);
+         }
+      }
+   } while (dirty);
+   return tab_out;
+}
+
+G_graph buildIg(G_table liveOut) {
+   Set regs = F_registers();
+   G_graph ig = G_Graph();
+   G_nodeList flowNodes = G_nodes(flowGraph);
+
+   /* precolored nodes */
+   for_each(s1, regs) {
+      for_each(s2, regs) {
+         Ig_Edge(ig, s1->head, s2->head);
+      }
+      precolored = G_NodeList(Ig_Node(ig, s1->head), precolored);
+   }
+   /* def nodes */
+   for (G_nodeList nodes = flowNodes; nodes; nodes = nodes->tail) {
+      for_each(def, FG_def(nodes->head)) {
+         Ig_Node(ig, def->head);
+      }
+   }
+   /* add edges */
+   for (G_nodeList nodes = flowNodes; nodes; nodes = nodes->tail) {
+      G_node node = nodes->head;
+      Set out = lookupLiveMap(liveOut, node);
+      if (FG_isMove(node)) {
+         out = Set_diff(out, FG_use(node));
+         for_each(def, FG_def(node)) {
+            for_each(use, FG_use(node)) {
+               if (use->head != F_FP() && def->head != F_FP())
+                  moves = MSet_union(Live_MoveList(Ig_Node(ig, use->head),
+                                                   Ig_Node(ig, def->head), NULL), moves);
+            }
+         }
+      }
+      for_each(def, FG_def(node)) {
+         for_each(outs, out) {
+            Ig_Edge(ig, def->head, outs->head);
+         }
+      }
+   }
+   return ig;
 }
 

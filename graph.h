@@ -72,4 +72,6 @@ void *G_look(G_table t, G_node node);
 bool G_isAdj(G_node n1, G_node n2);
 /* Get the reversed list of nodes belonging to "g" */
 G_nodeList G_rnodes(G_graph g);
+
+void G_addAdj(G_node u, G_node v);
 #endif

@@ -37,11 +37,5 @@ string Temp_look(Temp_map m, Temp_temp t);
 void Temp_dumpMap(FILE *out, Temp_map m);
 
 Temp_map Temp_nameMap(void);
-
-bool Temp_insertList(Temp_tempList *lp, Temp_temp t);
-bool Temp_inTempList(Temp_tempList l, Temp_temp t);
-string Temp_name(Temp_temp t);
-
 Temp_tempList L(unsigned argsNum, ...);
-unsigned int Lsize(Temp_tempList l);
 #endif

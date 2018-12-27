@@ -135,33 +135,3 @@ Temp_tempList L(unsigned argsNum, ...) {
    va_end(arglist);
    return ret;
 }
-
-unsigned int Lsize(Temp_tempList l) {
-   unsigned int ret = 0;
-   for (; l; l = l->tail)
-      ++ret;
-   return ret;
-}
-
-bool Temp_insertList(Temp_tempList *lp, Temp_temp t) {
-   Temp_tempList l = *lp;
-   if (!Temp_inTempList(l, t)) {
-      l = Temp_TempList(t, l);
-      *lp = l;
-      return TRUE;
-   } else return FALSE;
-}
-
-bool Temp_inTempList(Temp_tempList l, Temp_temp t) {
-   for (; l; l = l->tail)
-      if (l->head == t)
-         return TRUE;
-   return FALSE;
-}
-
-string Temp_name(Temp_temp t) {
-   static Temp_map name_m;
-   if (!name_m)
-      name_m = Temp_layerMap(F_nameMap(), Temp_nameMap());
-   return Temp_look(name_m, t);
-}
