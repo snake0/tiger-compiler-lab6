@@ -11,9 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/liveness.c" beforeDir="false" afterPath="$PROJECT_DIR$/liveness.c" afterDir="false" />
-    </list>
+    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,10 +57,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/liveness.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
+            <state relative-caret-position="342">
               <caret line="206" column="30" selection-start-line="206" selection-start-column="30" selection-end-line="206" selection-end-column="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -71,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/semant.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="250" selection-start-line="250" selection-end-line="251" />
+            <state relative-caret-position="418">
+              <caret line="396" column="55" lean-forward="true" selection-start-line="396" selection-start-column="55" selection-end-line="396" selection-end-column="55" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -248,7 +246,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="width" value="1122" />
+    <option name="width" value="843" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -314,7 +312,7 @@
       <workItem from="1545809265579" duration="951000" />
       <workItem from="1545810360631" duration="41013000" />
       <workItem from="1545905779065" duration="235000" />
-      <workItem from="1545906190317" duration="3096000" />
+      <workItem from="1545906190317" duration="3336000" />
     </task>
     <task id="LOCAL-00001" summary="finish liveness">
       <created>1545915366892</created>
@@ -327,7 +325,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47533000" />
+    <option name="totallyTimeSpent" value="47773000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -339,7 +337,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1122" height="900" extended-state="6" />
+    <frame x="0" y="0" width="843" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.18425927" />
@@ -682,16 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/semant.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="250" selection-start-line="250" selection-end-line="251" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/translate.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1159">
@@ -763,8 +751,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/liveness.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
+        <state relative-caret-position="342">
           <caret line="206" column="30" selection-start-line="206" selection-start-column="30" selection-end-line="206" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/semant.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="396" column="55" lean-forward="true" selection-start-line="396" selection-start-column="55" selection-end-line="396" selection-end-column="55" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
