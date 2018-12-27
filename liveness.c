@@ -17,7 +17,15 @@ static void enterLiveMap(G_table t, G_node flowNode, TSet temps) { G_enter(t, fl
 
 static TSet lookupLiveMap(G_table t, G_node flownode) { return (TSet) G_look(t, flownode); }
 
-/* ==================== tool functions ==================== */
+MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
+   MSet lm = (MSet) checked_malloc(sizeof(*lm));
+   lm->src = src;
+   lm->dst = dst;
+   lm->tail = tail;
+   return lm;
+}
+
+/* ============================ tool functions ============================ */
 bool TSet_in(TSet s, T t) {
    forEachTemp(i, s) {
       if (i->head == t)return TRUE;
@@ -91,15 +99,7 @@ bool MSet_in(MSet m, G_node src, G_node dst) {
    return FALSE;
 }
 
-MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
-   MSet lm = (MSet) checked_malloc(sizeof(*lm));
-   lm->src = src;
-   lm->dst = dst;
-   lm->tail = tail;
-   return lm;
-}
-
-/* ==================== implement begin ==================== */
+/* ============================ implement begin ============================ */
 static G_node Ig_Node(G_graph graph, T t);
 static void Ig_Edge(G_graph graph, T t1, T t2);
 static G_table buildLiveOut();
