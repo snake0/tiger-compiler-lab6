@@ -30,6 +30,15 @@ struct expty expTy(Tr_exp exp, Ty_ty ty) {
    return e;
 };
 
+F_fragList SEM_transProg(A_exp exp) {
+   Tr_level mainFrame = Tr_outermost();
+   struct expty e = transExp(E_base_venv(), E_base_tenv(), exp, mainFrame, NULL);
+   Tr_AddFuncFrag(e.exp, mainFrame);
+   return Tr_getResult();
+}
+
+/* ============================ exp translator ============================ */
+
 struct expty transCallExp(S_table venv, S_table tenv, A_exp a, Tr_level cur_l, Temp_label br_label) {
    E_enventry x = S_look(venv, get_callexp_func(a));
    if (!x || x->kind != E_funEntry) {
@@ -239,6 +248,8 @@ struct expty transArrayExp(S_table venv, S_table tenv, A_exp a, Tr_level cur_l, 
    }
 }
 
+/* ============================ var translator ============================ */
+
 struct expty transSimpleVar(S_table venv, S_table tenv, A_var v, Tr_level cur_l, Temp_label br_label) {
    S_symbol id = get_simplevar_sym(v);
    E_enventry var_entry = S_look(venv, id);
@@ -290,6 +301,8 @@ struct expty transSubscriptVar(S_table venv, S_table tenv, A_var v, Tr_level cur
       EM_error(index->pos, "int required");
    return expTy(Tr_subscriptVar(varexpty.exp, expexpty.exp), get_array(varexpty));
 }
+
+/* ============================ dec translator ============================ */
 
 Tr_exp transFunctionDec(S_table venv, S_table tenv, A_dec d, Tr_level cur_l, Temp_label br_label) {
    TAB_table name_table = TAB_empty();
@@ -388,6 +401,7 @@ Tr_exp transTypeDec(S_table venv, S_table tenv, A_dec d, Tr_level cur_l, Temp_la
    }
    return Tr_Nil();
 }
+/* ============================ worker functions ============================ */
 
 struct expty transVar(S_table venv, S_table tenv, A_var v, Tr_level cur_l, Temp_label br_label) {
    struct expty (*transXXXVar[3])(S_table, S_table, A_var, Tr_level, Temp_label) = {
@@ -424,6 +438,8 @@ Tr_exp transDec(S_table venv, S_table tenv, A_dec d, Tr_level cur_l, Temp_label 
    return transXXXDec[d->kind](venv, tenv, d, cur_l, br_label);
 }
 
+/* ============================ tool functions ============================ */
+
 Ty_ty transTy(S_table tenv, A_ty a) {
    switch (a->kind) {
       case A_nameTy: {
@@ -449,12 +465,6 @@ Ty_ty transTy(S_table tenv, A_ty a) {
    return NULL;
 }
 
-F_fragList SEM_transProg(A_exp exp) {
-   Tr_level mainFrame = Tr_outermost();
-   struct expty e = transExp(E_base_venv(), E_base_tenv(), exp, mainFrame, NULL);
-   Tr_AddFuncFrag(e.exp, mainFrame);
-   return Tr_getResult();
-}
 
 static Ty_fieldList mkTyFieldList(S_table tenv, A_fieldList fieldList) {
    Ty_ty type = S_look(tenv, fieldList->head->typ);

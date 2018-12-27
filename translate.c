@@ -59,6 +59,8 @@ static struct Cx unCx(Tr_exp e);
 static T_exp Tr_staticLink(Tr_level level, Tr_level target);
 static T_expList Tr2T(Tr_expList Tr);
 
+/* ============================ frame operator ============================ */
+
 Tr_level Tr_outermost(void) {
    if (!outermost) {
       outermost = checked_malloc(sizeof(*outermost));
@@ -136,6 +138,7 @@ Tr_access Tr_allocLocal(Tr_level level, bool escape) {
                    F_allocLocal(level->frame, escape)
            );
 }
+/* ============================ translators ============================ */
 
 Tr_exp Tr_Nil() {
    return Tr_Ex(T_Const(0));
@@ -447,7 +450,7 @@ Tr_exp Tr_subscriptVar(Tr_exp start, Tr_exp off) {
    );
 }
 
-// helpers definitions
+/* ============================ helpers ============================ */
 
 static patchList PatchList(Temp_label *head, patchList tail) {
    patchList list;
