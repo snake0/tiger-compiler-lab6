@@ -11,14 +11,13 @@
 #include "liveness.h"
 #include "table.h"
 
-/* default functions */
 T Live_gtemp(G_node ig_n) { return G_nodeInfo(ig_n); }
 
 static void enterLiveMap(G_table t, G_node flowNode, Set temps) { G_enter(t, flowNode, temps); }
 
 static Set lookupLiveMap(G_table t, G_node flownode) { return (Set) G_look(t, flownode); }
 
-/* set operators */
+/* ========== tool functions ================ */
 bool Set_in(Set s, T t) {
    for_each(i, s) {
       if (i->head == t)return TRUE;
@@ -58,14 +57,11 @@ bool Set_equal(Set s1, Set s2) {
       if (!Set_in(s2, i->head))
          return FALSE;
    }
-   for_each(i, s2) {
-      if (!Set_in(s1, i->head))
-         return FALSE;
-   }
+   if (Set_size(s1) != Set_size(s2))
+      return FALSE;
    return TRUE;
 }
 
-/* move set operators */
 MSet MSet_union(MSet m1, MSet m2) {
    MSet ret = NULL;
    for (MSet m = m1; m; m = m->tail)
@@ -99,7 +95,7 @@ MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
    return lm;
 }
 
-/* static functions */
+/* ========== implement begin ================ */
 static G_node Ig_Node(G_graph graph, T t);
 static void Ig_Edge(G_graph graph, T t1, T t2);
 static G_table buildLiveOut();
@@ -209,8 +205,13 @@ G_graph buildIg(G_table liveOut) {
          for_each(def, FG_def(node)) {
             for_each(use, FG_use(node)) {
                if (use->head != F_FP() && def->head != F_FP())
-                  moves = MSet_union(Live_MoveList(Ig_Node(ig, use->head),
-                                                   Ig_Node(ig, def->head), NULL), moves);
+                  moves =
+                          MSet_union(
+                                  Live_MoveList(
+                                          Ig_Node(ig, use->head),
+                                          Ig_Node(ig, def->head), NULL),
+                                  moves
+                          );
             }
          }
       }
