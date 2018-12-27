@@ -11,7 +11,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="" />
+    <list default="true" id="8dad3882-c591-4f23-8517-03d3cc2b7536" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/liveness.c" beforeDir="false" afterPath="$PROJECT_DIR$/liveness.c" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/liveness.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="19" selection-start-line="19" selection-end-line="20" />
+            <state relative-caret-position="361">
+              <caret line="206" column="30" selection-start-line="206" selection-start-column="30" selection-end-line="206" selection-end-column="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -90,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/x86frame.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1899">
-              <caret line="120" column="23" selection-start-line="120" selection-start-column="23" selection-end-line="120" selection-end-column="23" />
+            <state relative-caret-position="3594">
+              <caret line="218" column="27" selection-start-line="218" selection-start-column="27" selection-end-line="218" selection-end-column="27" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -236,11 +238,11 @@
         <option value="$PROJECT_DIR$/temp.h" />
         <option value="$PROJECT_DIR$/codegen.c" />
         <option value="$PROJECT_DIR$/temp.c" />
-        <option value="$PROJECT_DIR$/liveness.c" />
         <option value="$PROJECT_DIR$/liveness.h" />
         <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/semant.c" />
         <option value="$PROJECT_DIR$/translate.c" />
+        <option value="$PROJECT_DIR$/liveness.c" />
       </list>
     </option>
   </component>
@@ -312,7 +314,7 @@
       <workItem from="1545809265579" duration="951000" />
       <workItem from="1545810360631" duration="41013000" />
       <workItem from="1545905779065" duration="235000" />
-      <workItem from="1545906190317" duration="2884000" />
+      <workItem from="1545906190317" duration="3096000" />
     </task>
     <task id="LOCAL-00001" summary="finish liveness">
       <created>1545915366892</created>
@@ -325,7 +327,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47321000" />
+    <option name="totallyTimeSpent" value="47533000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -340,7 +342,7 @@
     <frame x="0" y="0" width="1122" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18425927" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18425927" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" weight="0.32885906" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -673,16 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/liveness.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="19" selection-start-line="19" selection-end-line="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assem.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="874">
@@ -761,8 +753,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/x86frame.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1899">
-          <caret line="120" column="23" selection-start-line="120" selection-start-column="23" selection-end-line="120" selection-end-column="23" />
+        <state relative-caret-position="3594">
+          <caret line="218" column="27" selection-start-line="218" selection-start-column="27" selection-end-line="218" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/liveness.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="206" column="30" selection-start-line="206" selection-start-column="30" selection-end-line="206" selection-end-column="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

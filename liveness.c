@@ -204,13 +204,11 @@ G_graph buildIg(G_table liveOut) {
       TSet out = lookupLiveMap(liveOut, node);
       if (FG_isMove(node)) {
          out = TSet_diff(out, FG_use(node));
+         /* build move list */
          forEachTemp(def, FG_def(node)) {
             forEachTemp(use, FG_use(node)) {
-               if (use->head != F_FP() && def->head != F_FP()) {
-                  moves = MSet_union(
-                          Live_MoveList(Ig_Node(ig, use->head), Ig_Node(ig, def->head), NULL),
-                          moves);
-               }
+               if (use->head != F_FP() && def->head != F_FP())
+                  moves = MSet_union(Live_MoveList(Ig_Node(ig, use->head), Ig_Node(ig, def->head), NULL), moves);
             }
          }
       }
