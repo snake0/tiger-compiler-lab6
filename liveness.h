@@ -6,7 +6,9 @@
 typedef Temp_tempList Set;
 typedef Temp_temp T;
 
-#define for_each(i, s) for(Set i = s; (i); (i) = (i)->tail)
+#define forEachTemp(i, s) for(Set (i) = (s); (i); (i) = (i)->tail)
+#define forEachNode(i, l) for(G_nodeList (i) = (l); (i); (i) = (i)->tail)
+#define forEachMove(i, m) for(MSet (i) = (m); (i); (i) = (i)->tail)
 
 bool Set_in(Set s, T t);
 unsigned Set_size(Set s);
