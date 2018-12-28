@@ -8,8 +8,9 @@
 
 #define F_REGNUM 16
 
-extern const int F_WORDSIZE;
+extern const int F_wordsize;
 extern Temp_temp (*F_REG[F_REGNUM])(void);
+extern char *F_REGNAME[F_REGNUM];
 
 typedef struct F_frame_ *F_frame;
 typedef struct F_access_ *F_access;

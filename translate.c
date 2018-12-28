@@ -209,7 +209,7 @@ static T_stm mkRecordFields(Temp_temp r, int order, Tr_expList fieldExpList) {
                               T_Mem(
                                       T_Binop(
                                               T_plus, T_Temp(r),
-                                              T_Const(order * F_WORDSIZE)
+                                              T_Const(order * F_wordsize)
                                       )
                               ),
                               unEx(fieldExpList->head)),
@@ -225,7 +225,7 @@ Tr_exp Tr_RecordCreation(int order, Tr_expList fieldList) {
                    T_Eseq(
                            T_Move(
                                    T_Temp(r),
-                                   F_externalCall("malloc", T_ExpList(T_Const(order * F_WORDSIZE), NULL))
+                                   F_externalCall("malloc", T_ExpList(T_Const(order * F_wordsize), NULL))
                            ),
                            T_Eseq(mkRecordFields(r, order - 1, fieldList), T_Temp(r))
                    )
@@ -400,7 +400,7 @@ Tr_exp Tr_ArrayCreation(Tr_exp size, Tr_exp init) {
                                                    F_externalCall(
                                                            "initArray",
                                                            T_ExpList(
-                                                                   T_Binop(T_mul, T_Temp(sizeReg), T_Const(F_WORDSIZE)),
+                                                                   T_Binop(T_mul, T_Temp(sizeReg), T_Const(F_wordsize)),
                                                                    T_ExpList(T_Temp(initReg), NULL)
                                                            )
                                                    )
@@ -429,7 +429,7 @@ Tr_exp Tr_fieldVar(Tr_exp start, int order) {
                            T_Binop(
                                    T_plus,
                                    unEx(start),
-                                   T_Const(F_WORDSIZE * order)
+                                   T_Const(F_wordsize * order)
                            )
                    )
            );
@@ -442,7 +442,7 @@ Tr_exp Tr_subscriptVar(Tr_exp start, Tr_exp off) {
                            T_plus,
                            T_Binop(
                                    T_mul, unEx(off),
-                                   T_Const(F_WORDSIZE)
+                                   T_Const(F_wordsize)
                            ),
                            unEx(start)
                    )

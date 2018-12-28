@@ -6,18 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/esaki/lab6/absyn.c
-util.h
-/Users/esaki/lab6/util.h
-symbol.h
-/Users/esaki/lab6/symbol.h
-absyn.h
-/Users/esaki/lab6/absyn.h
-stdlib.h
--
-stdio.h
--
-
 /Users/esaki/lab6/absyn.h
 
 /Users/esaki/lab6/assem.c
@@ -129,18 +117,6 @@ translate.h
 /Users/esaki/lab6/translate.h
 temp.h
 /Users/esaki/lab6/temp.h
-
-/Users/esaki/lab6/errormsg.c
-stdio.h
--
-stdlib.h
--
-stdarg.h
--
-util.h
-/Users/esaki/lab6/util.h
-errormsg.h
-/Users/esaki/lab6/errormsg.h
 
 /Users/esaki/lab6/errormsg.h
 
@@ -336,18 +312,6 @@ parse.h
 
 /Users/esaki/lab6/parse.h
 
-/Users/esaki/lab6/prabsyn.c
-stdio.h
--
-util.h
-/Users/esaki/lab6/util.h
-symbol.h
-/Users/esaki/lab6/symbol.h
-absyn.h
-/Users/esaki/lab6/absyn.h
-prabsyn.h
-/Users/esaki/lab6/prabsyn.h
-
 /Users/esaki/lab6/prabsyn.h
 
 /Users/esaki/lab6/printtree.c
@@ -398,14 +362,6 @@ flowgraph.h
 
 /Users/esaki/lab6/regalloc.h
 
-/Users/esaki/lab6/runtime.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-
 /Users/esaki/lab6/semant.c
 stdio.h
 -
@@ -446,27 +402,7 @@ frame.h
 translate.h
 /Users/esaki/lab6/translate.h
 
-/Users/esaki/lab6/symbol.c
-stdio.h
--
-string.h
--
-util.h
-/Users/esaki/lab6/util.h
-symbol.h
 /Users/esaki/lab6/symbol.h
-table.h
-/Users/esaki/lab6/table.h
-
-/Users/esaki/lab6/symbol.h
-
-/Users/esaki/lab6/table.c
-stdio.h
--
-util.h
-/Users/esaki/lab6/util.h
-table.h
-/Users/esaki/lab6/table.h
 
 /Users/esaki/lab6/table.h
 
@@ -538,27 +474,7 @@ tree.h
 
 /Users/esaki/lab6/tree.h
 
-/Users/esaki/lab6/types.c
-stdio.h
--
-util.h
-/Users/esaki/lab6/util.h
-symbol.h
-/Users/esaki/lab6/symbol.h
-types.h
 /Users/esaki/lab6/types.h
-
-/Users/esaki/lab6/types.h
-
-/Users/esaki/lab6/util.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-util.h
-/Users/esaki/lab6/util.h
 
 /Users/esaki/lab6/util.h
 assert.h

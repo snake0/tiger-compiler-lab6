@@ -18,7 +18,7 @@ static AS_instrList iList = NULL, last = NULL;
 static void emit(AS_instr inst);
 static Temp_temp munchExp(T_exp e);
 static void munchStm(T_stm s);
-static void munchArgs(T_expList args);
+static Temp_tempList munchArgs(T_expList args);
 
 /* definitions */
 void emit(AS_instr inst) {
@@ -78,17 +78,17 @@ static Temp_temp munchExp(T_exp e) {
 
       case T_CALL: {
          if (e->u.CALL.fun->kind == T_NAME) {
-            munchArgs(e->u.CALL.args);
+            Temp_tempList src = munchArgs(e->u.CALL.args);
             char *inst = checked_malloc(INST_SIZE);
             sprintf(inst, "callq %s", Temp_labelstring(e->u.CALL.fun->u.NAME));
-            emit(AS_Oper(inst, F_callersaves(), NULL, NULL));
+            emit(AS_Oper(inst, F_callersaves(), src, NULL));
 
             unsigned count = 0;
             T_expList args = e->u.CALL.args;
             for (; args; args = args->tail)
                ++count;
             count > 6 ? (count -= 6) : (count = 0);
-            count *= F_WORDSIZE;
+            count *= F_wordsize;
             return ret;
          } else
             assert(0);
@@ -180,12 +180,16 @@ static void munchStm(T_stm s) {
    }
 }
 
-void munchArgs(T_expList args) {
+Temp_tempList munchArgs(T_expList args) {
    T_expList rargs = NULL;
    for (; args; args = args->tail)
       rargs = T_ExpList(args->head, rargs);
+   Temp_tempList ret = NULL;
+   for (T_expList a = rargs; a; a = a->tail)
+      ret = Temp_TempList(munchExp(a->head), ret);
    for (; rargs; rargs = rargs->tail)
       emit(AS_Oper("pushq `s0", NULL, L(1, munchExp(rargs->head)), NULL));
+   return ret;
 }
 
 

@@ -13,14 +13,33 @@
 #include "color.h"
 #include "table.h"
 
+static const int K = 16;
+static unsigned inf = (unsigned) -1;
+/* ============================ static var ============================ */
+
+/* ============================ prototypes ============================ */
+static void build(struct Live_graph lg, TSet regs);
+static void simplify(void);
+static void coalesce(void);
+static void freeze(void);
+static void selectSpill(void);
+
+
+/* ============================ worker functions ============================ */
+void build(struct Live_graph lg, TSet regs){
+
+}
+
+
 static bool isPrecolored(G_node ig_n);
 
 bool isPrecolored(G_node ig_n) {
    T t = Live_gtemp(ig_n);
-   return TSet_in(F_registers(), t);
+   return T_in(F_registers(), t);
 }
 
-struct COL_result COL_color(G_graph ig, Temp_map initial, Temp_tempList regs, Live_moveList moves) {
+struct COL_result COL_color(struct Live_graph lg, TSet regs) {
+   build(lg,regs);
    struct COL_result ret;
    return ret;
 }

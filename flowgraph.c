@@ -46,30 +46,34 @@ bool FG_isMove(G_node n) {
 }
 
 G_graph FG_AssemFlowGraph(AS_instrList il, F_frame f) {
-   G_graph afg = G_Graph();
-   G_node n = NULL, prev_n = NULL;
-   AS_instr i = NULL, prev_i = NULL;
+   G_graph flow = G_Graph();
+   G_node node, prevNode = NULL;
+   AS_instr instr;
    TAB_table label_table = TAB_empty();
-
-   for (; il; il = il->tail, prev_n = n, prev_i = i) {
-      i = il->head;
-      n = G_Node(afg, i);
-      if (prev_n && !(prev_i->kind == I_OPER && !prev_i->u.OPER.cond)) //TODO ?
-         G_addEdge(prev_n, n);
-      if ((i)->kind == I_LABEL)
-         TAB_enter(label_table, i->u.LABEL.label, n);
+   if (il) {
+      node = G_Node(flow, il->head);
+      if (il->head->kind == I_LABEL)
+         TAB_enter(label_table, il->head->u.LABEL.label, node);
+      il = il->tail;
+      prevNode = node;
    }
-
-   G_nodeList nodes = G_nodes(afg);
+   for (; il; il = il->tail, prevNode = node) {
+      instr = il->head;
+      node = G_Node(flow, instr);
+      G_addEdge(prevNode, node);
+      if (instr->kind == I_LABEL)
+         TAB_enter(label_table, instr->u.LABEL.label, node);
+   }
+   G_nodeList nodes = G_nodes(flow);
    for (; nodes; nodes = nodes->tail) {
-      i = G_nodeInfo(nodes->head);
-      if ((i->kind == I_OPER && i->u.OPER.jumps)) {
-         Temp_labelList labels = i->u.OPER.jumps->labels;
+      instr = G_nodeInfo(nodes->head);
+      if ((instr->kind == I_OPER && instr->u.OPER.jumps)) {
+         Temp_labelList labels = instr->u.OPER.jumps->labels;
          for (; labels; labels = labels->tail) {
             G_node succ = TAB_look(label_table, labels->head);
             G_addEdge(nodes->head, succ);
          }
       }
    }
-   return afg;
+   return flow;
 }

@@ -13,13 +13,13 @@
 
 /* static variables */
 
-const int F_WORDSIZE = 8;
+const int F_wordsize = 8;
 static Temp_tempList callersaves = NULL, calleesaves = NULL;
 static Temp_map temp_map = NULL;
 static Temp_tempList registers = NULL;
 static Temp_temp reg[F_REGNUM];
 
-static char *REG_NAME[F_REGNUM] =
+char *F_REGNAME[F_REGNUM] =
         {
                 "%rax", "%rbx", "%rcx", "%rdx",
                 "%rsi", "%rdi", "%rbp", "%rsp",
@@ -92,7 +92,7 @@ Temp_map F_tempMap(void) {
    if (!temp_map) {
       temp_map = Temp_empty();
       for (int i = 0; i < F_REGNUM; ++i) {
-         Temp_enter(temp_map, F_REG[i](), REG_NAME[i]);
+         Temp_enter(temp_map, F_REG[i](), F_REGNAME[i]);
       }
    }
    return temp_map;
@@ -130,7 +130,7 @@ Temp_tempList F_registers(void) {
 
 F_access F_allocLocal(F_frame f, bool escape) {
    return escape ?
-          F_InFrame(++(f->size) * -F_WORDSIZE) :
+          F_InFrame(++(f->size) * -F_wordsize) :
           F_InReg(Temp_newtemp());
 }
 
@@ -211,12 +211,12 @@ static F_accessList F_allocFormals(U_boolList formals) {
       return NULL;
    unsigned formal_count = 0;
    formals = formals->tail;
-   F_access static_link = F_InFrame(F_WORDSIZE);
+   F_access static_link = F_InFrame(F_wordsize);
    F_accessList formalAccessList = F_AccessList(static_link, NULL);
    for (; formals; formals = formals->tail) {
       ++formal_count;
       F_access newFormal = formal_count > 6 || formals->head ?
-                           F_InFrame(((formal_count - 5) * F_WORDSIZE)) :
+                           F_InFrame(((formal_count - 5) * F_wordsize)) :
                            F_InReg(Temp_newtemp());
       formalAccessList = F_AccessList(newFormal, formalAccessList);
    }

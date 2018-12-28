@@ -25,78 +25,99 @@ MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
    return lm;
 }
 
-/* ============================ tool functions ============================ */
-bool TSet_in(TSet s, T t) {
-   forEachTemp(i, s) {
-      if (i->head == t)return TRUE;
-   }
+/* ============================ set operators ============================ */
+bool T_in(TSet s, T t) {
+   forEachTemp(i, s) if (i->head == t)return TRUE;
    return FALSE;
 }
 
-unsigned TSet_size(TSet s) {
+unsigned T_size(TSet s) {
    unsigned size = 0;
-   forEachTemp(i, s) { ++size; }
+   forEachTemp(i, s) ++size;
    return size;
 }
 
-TSet TSet_diff(TSet s1, TSet s2) {
+TSet T_diff(TSet s1, TSet s2) {
    TSet ret = NULL;
    forEachTemp(i, s1) {
-      if (!TSet_in(s2, i->head))
+      if (!T_in(s2, i->head))
          ret = Temp_TempList(i->head, ret);
    }
    return ret;
 }
 
-TSet TSet_union(TSet s1, TSet s2) {
+TSet T_union(TSet s1, TSet s2) {
    TSet ret = NULL;
    forEachTemp(i, s1) {
       ret = Temp_TempList(i->head, ret);
    }
    forEachTemp(i, s2) {
-      if (!TSet_in(s1, i->head))
+      if (!T_in(s1, i->head))
          ret = Temp_TempList(i->head, ret);
    }
    return ret;
 }
 
-bool TSet_equal(TSet s1, TSet s2) {
+bool T_equal(TSet s1, TSet s2) {
    forEachTemp(i, s1) {
-      if (!TSet_in(s2, i->head))
+      if (!T_in(s2, i->head))
          return FALSE;
    }
-   if (TSet_size(s1) != TSet_size(s2))
+   if (T_size(s1) != T_size(s2))
       return FALSE;
    return TRUE;
 }
 
-MSet MSet_union(MSet m1, MSet m2) {
+MSet M_union(MSet m1, MSet m2) {
    MSet ret = NULL;
    forEachMove(m, m1) {
       ret = Live_MoveList(m->src, m->dst, ret);
    }
    forEachMove(m, m2) {
-      if (!MSet_in(m1, m->src, m->dst))
+      if (!M_in(m1, m->src, m->dst))
          ret = Live_MoveList(m->src, m->dst, ret);
    }
    return ret;
 }
 
-MSet MSet_diff(MSet m1, MSet m2) {
+MSet M_diff(MSet m1, MSet m2) {
    MSet ret = NULL;
    forEachMove(m, m1) {
-      if (!MSet_in(m2, m->src, m->dst))
+      if (!M_in(m2, m->src, m->dst))
          ret = Live_MoveList(m->src, m->dst, ret);
    }
    return ret;
 }
 
-bool MSet_in(MSet m, G_node src, G_node dst) {
-   forEachMove(m0, m) {
-      if (m0->src == src && m0->dst == dst)
-         return TRUE;
-   }
+bool M_in(MSet m, G_node src, G_node dst) {
+   forEachMove(m0, m)if (m0->src == src && m0->dst == dst) return TRUE;
    return FALSE;
+}
+
+bool G_in(GSet g, G_node n) {
+   forEachNode(g0, g) if (g0->head == n)return TRUE;
+   return FALSE;
+}
+
+GSet G_union(GSet u, GSet v) {
+   GSet ret = NULL;
+   forEachNode(g0, u) {
+      ret = G_NodeList(g0->head, ret);
+   }
+   forEachNode(g0, v) {
+      if (!G_in(u, g0->head))
+         ret = G_NodeList(g0->head, ret);
+   }
+   return ret;
+}
+
+GSet G_diff(GSet u, GSet v) {
+   GSet ret = NULL;
+   forEachNode(i, u) {
+      if (!G_in(v, i->head))
+         ret = G_NodeList(i->head, ret);
+   }
+   return ret;
 }
 
 /* ============================ implement begin ============================ */
@@ -109,7 +130,7 @@ static void initContext(G_graph flow);
 /* static variables */
 static MSet moves;
 static GSet precolored;
-static G_table degree;
+static G_table priorities;
 static TAB_table t2n;
 static GSet flowNodes;
 
@@ -117,14 +138,14 @@ struct Live_graph Live_liveness(G_graph flow) {
    initContext(flow);
    G_table tab_out = buildLiveOut();
    G_graph graph = buildIg(tab_out);
-   struct Live_graph result = {graph, moves, degree, precolored};
+   struct Live_graph result = {graph, moves, priorities, precolored};
    return result;
 }
 
 static void initContext(G_graph flow) {
    moves = NULL;
    precolored = NULL;
-   degree = G_empty();
+   priorities = G_empty();
    t2n = TAB_empty();
    flowNodes = G_rnodes(flow);
 }
@@ -136,19 +157,19 @@ G_node Ig_Node(G_graph graph, T t) {
    TAB_enter(t2n, t, node);
    int *count = checked_malloc(sizeof(int));
    *count = 0;
-   G_enter(degree, node, count);
+   G_enter(priorities, node, count);
    return node;
 }
 
 void Ig_Edge(G_graph graph, T t1, T t2) {
    if (t1 == t2 || t1 == F_FP() || t2 == F_FP()) return;
    G_node u = Ig_Node(graph, t1), v = Ig_Node(graph, t2);
-   ++*((int *) G_look(degree, u));
-   ++*((int *) G_look(degree, v));
+   ++*((int *) G_look(priorities, u));
+   ++*((int *) G_look(priorities, v));
    G_addAdj(u, v);
-   if (!TSet_in(F_registers(), t1))
+   if (!T_in(F_registers(), t1))
       G_addEdge(u, v);
-   if (!TSet_in(F_registers(), t2))
+   if (!T_in(F_registers(), t2))
       G_addEdge(v, u);
 }
 
@@ -164,16 +185,16 @@ static G_table buildLiveOut() {
          TSet out = lookupLiveMap(tab_out, node);
 
          /* in = use U (out-def) out = U(succ) in */
-         TSet inp = TSet_union(FG_use(node), TSet_diff(out, FG_def(node)));
+         TSet inp = T_union(FG_use(node), T_diff(out, FG_def(node)));
          TSet outp = NULL;
          forEachNode(succ, G_succ(node)) {
-            outp = TSet_union(outp, lookupLiveMap(tab_in, succ->head));
+            outp = T_union(outp, lookupLiveMap(tab_in, succ->head));
          }
-         if (!TSet_equal(in, inp)) {
+         if (!T_equal(in, inp)) {
             dirty = TRUE;
             enterLiveMap(tab_in, node, inp);
          }
-         if (!TSet_equal(out, outp)) {
+         if (!T_equal(out, outp)) {
             dirty = TRUE;
             enterLiveMap(tab_out, node, outp);
          }
@@ -203,12 +224,12 @@ G_graph buildIg(G_table liveOut) {
       G_node node = nodes->head;
       TSet out = lookupLiveMap(liveOut, node);
       if (FG_isMove(node)) {
-         out = TSet_diff(out, FG_use(node));
+         out = T_diff(out, FG_use(node));
          /* build move list */
          forEachTemp(def, FG_def(node)) {
             forEachTemp(use, FG_use(node)) {
                if (use->head != F_FP() && def->head != F_FP())
-                  moves = MSet_union(Live_MoveList(Ig_Node(ig, use->head), Ig_Node(ig, def->head), NULL), moves);
+                  moves = M_union(Live_MoveList(Ig_Node(ig, use->head), Ig_Node(ig, def->head), NULL), moves);
             }
          }
       }
