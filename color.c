@@ -13,10 +13,10 @@
 #include "color.h"
 #include "table.h"
 
-static bool isPrecolored(G_node n);
+static bool isPrecolored(G_node ig_n);
 
 bool isPrecolored(G_node ig_n) {
-   Temp_temp t = Live_gtemp(ig_n);
+   T t = Live_gtemp(ig_n);
    return TSet_in(F_registers(), t);
 }
 

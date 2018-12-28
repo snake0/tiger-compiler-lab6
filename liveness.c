@@ -84,9 +84,9 @@ MSet MSet_union(MSet m1, MSet m2) {
 
 MSet MSet_diff(MSet m1, MSet m2) {
    MSet ret = NULL;
-   forEachMove(a, m1) {
-      if (!MSet_in(m2, a->src, a->dst))
-         ret = Live_MoveList(a->src, a->dst, ret);
+   forEachMove(m, m1) {
+      if (!MSet_in(m2, m->src, m->dst))
+         ret = Live_MoveList(m->src, m->dst, ret);
    }
    return ret;
 }
