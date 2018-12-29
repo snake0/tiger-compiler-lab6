@@ -8,7 +8,7 @@
 
 #define F_REGNUM 16
 
-extern const int F_wordsize;
+extern const int F_WORDSIZE;
 extern Temp_temp (*F_REG[F_REGNUM])(void);
 extern char *F_REGNAME[F_REGNUM];
 

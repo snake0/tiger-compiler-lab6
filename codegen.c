@@ -88,7 +88,7 @@ static Temp_temp munchExp(T_exp e) {
             for (; args; args = args->tail)
                ++count;
             count > 6 ? (count -= 6) : (count = 0);
-            count *= F_wordsize;
+            count *= F_WORDSIZE;
             return ret;
          } else
             assert(0);

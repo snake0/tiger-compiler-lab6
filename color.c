@@ -13,9 +13,20 @@
 #include "color.h"
 #include "table.h"
 
-static const int K = 16;
-static unsigned inf = (unsigned) -1;
 /* ============================ static var ============================ */
+static const unsigned K = 14;
+static const unsigned INF = (unsigned) -1;
+
+static G_graph graph;
+
+static GSet precolored;
+static GSet simplifyWorklist, spillWorklist, freezeWorklist;
+static GSet coalescedNodes,spilledNodes, coloredNodes;
+static GSet selectStack;
+
+static MSet coalescedMoves, constrainedMoves, frozenMoves;
+static MSet worklistMoves;
+static MSet activeMoves;
 
 /* ============================ prototypes ============================ */
 static void build(struct Live_graph lg, TSet regs);
@@ -26,7 +37,8 @@ static void selectSpill(void);
 
 
 /* ============================ worker functions ============================ */
-void build(struct Live_graph lg, TSet regs){
+void build(struct Live_graph lg, TSet regs) {
+   precolored = lg.precolored;
 
 }
 
@@ -39,7 +51,7 @@ bool isPrecolored(G_node ig_n) {
 }
 
 struct COL_result COL_color(struct Live_graph lg, TSet regs) {
-   build(lg,regs);
+   build(lg, regs);
    struct COL_result ret;
    return ret;
 }
