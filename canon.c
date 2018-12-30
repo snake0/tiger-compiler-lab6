@@ -248,10 +248,10 @@ static void trace(T_stmList list) {
          last->tail->tail = true;
          trace(true);
       } else {
-         Temp_label false = Temp_newlabel();
+         Temp_label f = Temp_newlabel();
          last->tail->head = T_Cjump(s->u.CJUMP.op, s->u.CJUMP.left,
-                                    s->u.CJUMP.right, s->u.CJUMP.true, false);
-         last->tail->tail = T_StmList(T_Label(false), getNext());
+                                    s->u.CJUMP.right, s->u.CJUMP.true, f);
+         last->tail->tail = T_StmList(T_Label(f), getNext());
       }
    } else
       assert(0);

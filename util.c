@@ -8,7 +8,7 @@
 #include "util.h"
 
 void *checked_malloc(int len) {
-   void *p = malloc(len);
+   void *p = malloc((size_t) len);
    if (!p) {
       fprintf(stderr, "\nRan out of memory!\n");
       exit(1);
@@ -17,7 +17,7 @@ void *checked_malloc(int len) {
 }
 
 string String(char *s) {
-   string p = checked_malloc(strlen(s) + 1);
+   string p = checked_malloc((int) (strlen(s) + 1));
    strcpy(p, s);
    return p;
 }

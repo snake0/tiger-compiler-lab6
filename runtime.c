@@ -14,7 +14,7 @@ int *initArray(int size, int init) {
 int *allocRecord(int size) {
    int i;
    int *p, *a;
-   p = a = (int *) malloc(size);
+   p = a = (int *) malloc((size_t) size);
    for (i = 0; i < size; i += sizeof(int)) *p++ = 0;
    return a;
 }
@@ -53,7 +53,7 @@ int main() {
    int i;
    for (i = 0; i < 256; i++) {
       consts[i].length = 1;
-      consts[i].chars[0] = i;
+      consts[i].chars[0] = (unsigned char) i;
    }
    return tigermain(0 /* static link */);
 }

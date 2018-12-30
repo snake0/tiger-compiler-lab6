@@ -11,13 +11,13 @@
 #include "liveness.h"
 #include "table.h"
 
-T Live_gtemp(G_node ig_n) { return G_nodeInfo(ig_n); }
+T Live_gtemp(G ig_n) { return G_nodeInfo(ig_n); }
 
-static void enterLiveMap(G_table t, G_node flowNode, TSet temps) { G_enter(t, flowNode, temps); }
+static void enterLiveMap(G_table t, G flowNode, TSet temps) { G_enter(t, flowNode, temps); }
 
-static TSet lookupLiveMap(G_table t, G_node flownode) { return (TSet) G_look(t, flownode); }
+static TSet lookupLiveMap(G_table t, G flownode) { return (TSet) G_look(t, flownode); }
 
-MSet Live_MoveList(G_node src, G_node dst, MSet tail) {
+MSet Live_MoveList(G src, G dst, MSet tail) {
    MSet lm = (MSet) checked_malloc(sizeof(*lm));
    lm->src = src;
    lm->dst = dst;
@@ -89,12 +89,12 @@ MSet M_diff(MSet m1, MSet m2) {
    return ret;
 }
 
-bool M_in(MSet m, G_node src, G_node dst) {
+bool M_in(MSet m, G src, G dst) {
    forEachMove(m0, m)if (m0->src == src && m0->dst == dst) return TRUE;
    return FALSE;
 }
 
-bool G_in(GSet g, G_node n) {
+bool G_in(GSet g, G n) {
    forEachNode(g0, g) if (g0->head == n)return TRUE;
    return FALSE;
 }
@@ -121,7 +121,7 @@ GSet G_diff(GSet u, GSet v) {
 }
 
 /* ============================ implement begin ============================ */
-static G_node Ig_Node(G_graph graph, T t);
+static G Ig_Node(G_graph graph, T t);
 static void Ig_Edge(G_graph graph, T t1, T t2);
 static G_table buildLiveOut();
 static G_graph buildIg(G_table liveOut);
@@ -131,13 +131,14 @@ static void initContext(G_graph flow);
 static MSet moves;
 static GSet precolored;
 static G_table priorities;
-static TAB_table t2n;
+static TAB_table t2n; // just for better performance
 static GSet flowNodes;
 
 struct Live_graph Live_liveness(G_graph flow) {
    initContext(flow);
    G_table tab_out = buildLiveOut();
    G_graph graph = buildIg(tab_out);
+   /* return interference graph, movelist, precolored nodes and priorities */
    struct Live_graph result = {graph, moves, priorities, precolored};
    return result;
 }
@@ -150,8 +151,8 @@ static void initContext(G_graph flow) {
    flowNodes = G_rnodes(flow);
 }
 
-G_node Ig_Node(G_graph graph, T t) {
-   G_node node = TAB_look(t2n, t);
+G Ig_Node(G_graph graph, T t) {
+   G node = TAB_look(t2n, t);
    if (node) return node;
    node = G_Node(graph, t);
    TAB_enter(t2n, t, node);
@@ -163,7 +164,7 @@ G_node Ig_Node(G_graph graph, T t) {
 
 void Ig_Edge(G_graph graph, T t1, T t2) {
    if (t1 == t2 || t1 == F_FP() || t2 == F_FP()) return;
-   G_node u = Ig_Node(graph, t1), v = Ig_Node(graph, t2);
+   G u = Ig_Node(graph, t1), v = Ig_Node(graph, t2);
    ++*((int *) G_look(priorities, u));
    ++*((int *) G_look(priorities, v));
    G_addAdj(u, v);
@@ -180,7 +181,7 @@ static G_table buildLiveOut() {
    do {
       dirty = FALSE;
       forEachNode(nodes, flowNodes) {
-         G_node node = nodes->head;
+         G node = nodes->head;
          TSet in = lookupLiveMap(tab_in, node);
          TSet out = lookupLiveMap(tab_out, node);
 
@@ -221,7 +222,7 @@ G_graph buildIg(G_table liveOut) {
    }
    /* add edges */
    forEachNode(nodes, flowNodes) {
-      G_node node = nodes->head;
+      G node = nodes->head;
       TSet out = lookupLiveMap(liveOut, node);
       if (FG_isMove(node)) {
          out = T_diff(out, FG_use(node));

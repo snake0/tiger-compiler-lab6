@@ -145,7 +145,7 @@ T_relOp T_notRel(T_relOp r) {
          return T_ule;
    }
    assert(0);
-   return 0;
+   return T_ult;
 }
 
 T_relOp T_commute(T_relOp r) {
@@ -172,7 +172,7 @@ T_relOp T_commute(T_relOp r) {
          return T_ult;
    }
    assert(0);
-   return 0;
+   return T_ult;
 }
 
 

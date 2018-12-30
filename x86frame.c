@@ -110,19 +110,14 @@ Temp_tempList F_callersaves(void) {
 
 Temp_tempList F_calleesaves(void) {
    if (!calleesaves)
-      calleesaves = L(6,
-                      F_RBX(), F_RBP(), F_R12(),
-                      F_R13(), F_R14(), F_R15());
+      calleesaves = L(6, F_RBX(), F_RBP(), F_R12(), F_R13(), F_R14(), F_R15());
    return calleesaves;
 }
 
 Temp_tempList F_registers(void) {
    if (!registers)
-      registers = L(14,
-                    F_RAX(), F_RBX(), F_RCX(), F_RDX(),
-                    F_RSI(), F_RDI(), F_R8(), F_R9(),
-                    F_R10(), F_R11(), F_R12(), F_R13(),
-                    F_R14(), F_R15());
+      registers = L(15, F_RAX(), F_RBX(), F_RCX(), F_RDX(), F_RSI(), F_RDI(), F_R8(), F_R9(),
+                    F_R10(), F_R11(), F_R12(), F_R13(), F_R14(), F_R15(), F_RBP());
    return registers;
 }
 
@@ -217,7 +212,7 @@ static F_accessList F_allocFormals(U_boolList formals) {
       ++formal_count;
       F_access newFormal = formal_count > 6 || formals->head ?
                            F_InFrame(((formal_count - 5) * F_WORDSIZE)) :
-                           F_InReg(Temp_newtemp());
+                           F_InReg(Temp_newtemp());// TODO r
       formalAccessList = F_AccessList(newFormal, formalAccessList);
    }
    return formalAccessList;

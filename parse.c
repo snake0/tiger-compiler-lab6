@@ -30,7 +30,6 @@ A_exp parse(string fname) {
       return absyn_root;
    else {
       exit(123);
-      return NULL;
    }
 
 }

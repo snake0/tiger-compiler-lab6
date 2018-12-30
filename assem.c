@@ -96,14 +96,14 @@ static void format(char *result, string assem,
       if (*p == '`') {
          switch (*(++p)) {
             case 's': {
-               int n = atoi(++p);
+               int n = (int) strtol(++p, NULL, 10);
                string s = Temp_look(m, nthTemp(src, n));
                strcpy(result + i, s);
                i += strlen(s);
             }
                break;
             case 'd': {
-               int n = atoi(++p);
+               int n = (int) strtol(++p, NULL, 10);
                string s = Temp_look(m, nthTemp(dst, n));
                strcpy(result + i, s);
                i += strlen(s);
@@ -112,7 +112,7 @@ static void format(char *result, string assem,
             case 'j':
                assert(jumps);
                {
-                  int n = atoi(++p);
+                  int n = (int) strtol(++p, NULL, 10);
                   string s = Temp_labelstring(nthLabel(jumps->labels, n));
                   strcpy(result + i, s);
                   i += strlen(s);

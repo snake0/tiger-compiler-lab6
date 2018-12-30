@@ -17,10 +17,15 @@
 
 struct Temp_temp_ {
    int num;
+   bool spilled;
 };
 
 int Temp_int(Temp_temp t) {
    return t->num;
+}
+
+bool Temp_isSpill(Temp_temp t) {
+   return t->spilled;
 }
 
 string Temp_labelstring(Temp_label s) {
@@ -45,6 +50,7 @@ static int temps = 100;
 Temp_temp Temp_newtemp(void) {
    Temp_temp p = (Temp_temp) checked_malloc(sizeof(*p));
    p->num = temps++;
+   p->spilled = FALSE;
    {
       char r[16];
       sprintf(r, "%d", p->num);
@@ -53,6 +59,11 @@ Temp_temp Temp_newtemp(void) {
    return p;
 }
 
+Temp_temp Temp_newspill(void) {
+   Temp_temp p = Temp_newtemp();
+   p->spilled = TRUE;
+   return p;
+}
 
 struct Temp_map_ {
    TAB_table tab;

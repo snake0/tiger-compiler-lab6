@@ -18,10 +18,11 @@ static const unsigned K = 14;
 static const unsigned INF = (unsigned) -1;
 
 static G_graph graph;
+static G_table degree, color, alias, priorities, nodeMoves;
 
 static GSet precolored;
 static GSet simplifyWorklist, spillWorklist, freezeWorklist;
-static GSet coalescedNodes,spilledNodes, coloredNodes;
+static GSet coalescedNodes, spilledNodes, coloredNodes;
 static GSet selectStack;
 
 static MSet coalescedMoves, constrainedMoves, frozenMoves;
@@ -34,6 +35,7 @@ static void simplify(void);
 static void coalesce(void);
 static void freeze(void);
 static void selectSpill(void);
+static bool isPrecolored(G_node ig_n);
 
 
 /* ============================ worker functions ============================ */
@@ -43,7 +45,6 @@ void build(struct Live_graph lg, TSet regs) {
 }
 
 
-static bool isPrecolored(G_node ig_n);
 
 bool isPrecolored(G_node ig_n) {
    T t = Live_gtemp(ig_n);
